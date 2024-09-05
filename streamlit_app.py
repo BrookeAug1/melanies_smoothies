@@ -36,9 +36,10 @@ if ingredients_list:
         search_on=pd_df.loc[pd_df['FRUIT_NAME'] == fruit, 'SEARCH_ON'].iloc[0]
         st.write('The search value for ', fruit,' is ', search_on, '.')
 
-        st.subheader(fruit + ' Nutrition Information')
-        fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+search_on)
-        fv_df = st.dataframe(data=fruityvice_response.json())
+        if search_on:
+            st.subheader(fruit + ' Nutrition Information')
+            fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+search_on)
+            fv_df = st.dataframe(data=fruityvice_response.json())
 
     my_insert_statement = """insert into smoothies.public.orders(ingredients, name_on_order) values 
             ('"""+ ingredients_string +"""','"""+name_on_order+"""')"""
